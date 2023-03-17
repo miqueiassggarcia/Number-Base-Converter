@@ -1,0 +1,78 @@
+html {
+    background-color: #1e2b2e;
+    color: white;
+    font-family: Roboto, sans-serif;
+    font-size: 1.1em;
+}
+
+.form {
+    margin-top: 5em;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.select {
+    margin-bottom: 0.8em;
+}
+
+.select select {
+    position: relative;
+    -webkit-appearance: button;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    height: 2.2em;
+    margin: 2px;
+    padding: 0.3em 0.6em;
+    background: white;
+    border: 1px solid #aaaaaa;
+    border-radius: 0.3em;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    font-family: "Roboto", sans-serif;
+    font-size: 0.85em;
+    font-weight: normal;
+    overflow: hidden;
+    text-shadow: 0 1px 0 white;
+    -webkit-transition: box-shadow 200ms, border-color 200ms;
+    -moz-transition: box-shadow 200ms, border-color 200ms;
+    transition: box-shadow 200ms, border-color 200ms;
+    white-space: nowrap; 
+}
+
+.input input {
+    vertical-align: middle;
+    height: 1.5em;
+    margin: 2px;
+    padding: 0.3em 0.6em;
+    background: white;
+    border: 1px solid #aaaaaa;
+    border-radius: 0.3em;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    font-family: "Roboto", sans-serif;
+    font-size: 0.80em;
+    font-weight: normal;
+    overflow: hidden;
+    text-shadow: 0 1px 0 white;
+    -webkit-transition: box-shadow 200ms, border-color 200ms;
+    -moz-transition: box-shadow 200ms, border-color 200ms;
+    transition: box-shadow 200ms, border-color 200ms;
+    white-space: nowrap;
+}
+
+button {
+    background-color:#f4f4fa;
+    color: #333;
+    border: none; 
+    border-radius: 10px; 
+    padding: 12px;
+    min-height: 30px; 
+    min-width: 120px;
+    margin-top: 0.8em;
+    margin-bottom: 1em;
+}

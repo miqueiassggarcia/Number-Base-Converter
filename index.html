@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Conversor de bases numéricas</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="conversor.js"></script>
+</head>
+<body>
+    <div class="form" id="form">
+        <form action="index.html" method="get" id="formulario">
+            <div class="select">
+                <label for="baseInicial">Selecione a base inicial:</label>
+                <select name="baseInicial" id="baseInicial">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                </select>
+            </div>
+            <div class="select">
+                <label for="baseFinal">Selecione a base final:</label>
+                <select name="baseFinal" id="baseFinal">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                </select>
+            </div>
+            
+            <div class="input">
+                <label for="numero">Digite o valor numérico: </label>
+                <input type="text" id="numero" name="numero" placeholder="Valores da base">
+            </div>
+
+            <button type="submit">Calcular</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $( "form" ).submit(function( event ) {
+            let formData = $( this ).serializeArray();
+            event.preventDefault();
+
+            let convertedNumber
+            if(formData[0].value != 10) {
+                convertedNumber = convertToDecimal(formData[2].value, formData[0].value)
+                if(formData[1].value != 10) {
+                    convertedNumber = convertFromDecimal(convertedNumber, formData[1].value)
+                }
+            } else {
+                convertedNumber = convertFromDecimal(formData[2].value, formData[1].value)
+            }
+
+            let resultado = document.createElement("h2")
+            let texto = document.createTextNode(`Resultado na base ${formData[1].value}: ${convertedNumber}`)
+            resultado.appendChild(texto)
+
+            let element = document.getElementById("form")
+            let previousResult = document.querySelector("h2")
+            if(previousResult) {
+                element.removeChild(previousResult)
+            }
+            element.appendChild(resultado)
+        });
+    </script>
+</body>
+</html>
