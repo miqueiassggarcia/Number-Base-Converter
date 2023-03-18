@@ -49,7 +49,8 @@ html {
     vertical-align: middle;
     height: 1.5em;
     margin: 2px;
-    padding: 0.3em 0.6em;
+    margin-left: 0.3em;
+    padding: 0.5em 0.6em;
     background: white;
     border: 1px solid #aaaaaa;
     border-radius: 0.3em;
@@ -70,9 +71,30 @@ button {
     color: #333;
     border: none; 
     border-radius: 10px; 
-    padding: 12px;
+    padding: 10px;
     min-height: 30px; 
     min-width: 120px;
     margin-top: 0.8em;
     margin-bottom: 1em;
+}
+
+@media(max-width: 800px) {
+    body {
+        padding: 1em;
+        width: 95%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .input input {
+        margin-top: 1em;
+        margin-bottom: 1em;
+        width: 88%;
+        height: 2.5em;
+    }
+    button {
+        margin-left: 33%;
+    }
 }

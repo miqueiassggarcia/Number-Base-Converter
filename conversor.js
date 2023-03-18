@@ -8,19 +8,45 @@ const correspondences = {
 }
 
 function convertFromDecimal(value, numeral) {
-    const rests = []
-
-    while (value > 0) {
-        if(value % numeral > 9) {
-            rests.push(correspondences[value % numeral])
-        } else {
-            rests.push(value % numeral)
-        }
-
-        value = Math.floor(value / numeral)
+    if(!Number.isInteger(value)) {
+        var integerValue = Math.trunc(value)
+        var floatValue = value - Math.trunc(value)
+    } else {
+        var integerValue = Math.trunc(value)
     }
 
-    return rests.reverse().join("")
+    let restsInts = []
+    let restsFloat = []
+
+    while (integerValue > 0) {
+        if(integerValue % numeral > 9) {
+            restsInts.push(correspondences[integerValue % numeral])
+        } else {
+            restsInts.push(integerValue % numeral)
+        }
+
+        integerValue = Math.floor(integerValue / numeral)
+    }
+
+    if(!Number.isInteger(value)) {
+        while (floatValue > 0) {
+            floatValue *= numeral
+            console.log(floatValue)
+            
+            restsFloat.push(Math.trunc(floatValue))
+            floatValue -= Math.trunc(floatValue)
+        }
+    }
+
+    restsFloat = restsFloat.map((value) => {
+        if(value >= 10 && value <= 15) {
+            return correspondences[value]
+        } else {
+            return value
+        }
+    })
+
+    return restsInts.reverse().join("") + "." + restsFloat.join("")
 }
 
 function getKeyByValueOfCorrespondences(value) {
@@ -31,16 +57,31 @@ function getKeyByValueOfCorrespondences(value) {
     }
 }
 
-function convertToDecimal(value, numeral) {
-    let valueParse = String(value).toUpperCase().split("").reverse()
-
-    let result = valueParse.reduce((result, value, index) =>
+function powNumbersOfVetor(vetorNumbers, numeral, negative = false) {
+    return vetorNumbers.reduce((result, value, index) =>
         {if(value >= "A" && value <= "F") {
-            return result += getKeyByValueOfCorrespondences(value) * Math.pow(numeral, index)
+            return result += getKeyByValueOfCorrespondences(value) * Math.pow(numeral, (index + negative ? 1 : 0) * negative ? -1 : 1)
         }else {
-            return result += Number(value) * Math.pow(numeral, index)
+            return result += Number(value) * Math.pow(numeral, (index + negative ? 1 : 0) * negative ? -1 : 1)
         }}
     , 0)
+}
+
+function convertToDecimal(value, numeral) {
+    let result = ""
+
+    if(String(value).includes(".")) {
+        valueSplit = String(value).split(".")
+        var intValueParse = valueSplit[0].toUpperCase().split("").reverse()
+        result = powNumbersOfVetor(intValueParse, numeral);
+
+        var floatValueParse = valueSplit[1].toUpperCase().split("")
+        result += powNumbersOfVetor(floatValueParse, numeral, true);
+    }
+    else {
+        var intValueParse = String(value).toUpperCase().split("").reverse()
+        result = powNumbersOfVetor(intValueParse, numeral);
+    } 
 
     return result
 }
