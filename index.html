@@ -16,11 +16,11 @@
     <script src="conversor.js"></script>
 </head>
 <body>
-    <div class="form" id="form">
-        <form action="index.html" method="get" id="formulario">
+    <div class="divForm" id="divForm">
+        <form action="index.html" method="get" id="form">
             <div class="select">
-                <label for="baseInicial">Selecione a base inicial:</label>
-                <select name="baseInicial" id="baseInicial">
+                <label for="inicialBase">Selecione a base inicial:</label>
+                <select name="inicialBase" id="inicialBase">
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -39,8 +39,8 @@
                 </select>
             </div>
             <div class="select">
-                <label for="baseFinal" style="margin-right: 0.7em;">Selecione a base final:</label>
-                <select name="baseFinal" id="baseFinal">
+                <label for="finalBase" style="margin-right: 0.7em;">Selecione a base final:</label>
+                <select name="finalBase" id="finalBase">
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
@@ -60,8 +60,8 @@
             </div>
             
             <div class="input">
-                <label for="numero">Digite o valor numérico: </label>
-                <input type="text" id="numero" name="numero" placeholder="Valores da base">
+                <label for="number">Digite o valor numérico: </label>
+                <input type="text" id="number" name="number" placeholder="Valores da base">
             </div>
 
             <button type="submit">Calcular</button>
@@ -70,24 +70,31 @@
 
     <script type="text/javascript">
         $( "form" ).submit(function( event ) {
-            let formData = $( this ).serializeArray();
+            let [inicialBase, finalBase, number] = $( this ).serializeArray();
             event.preventDefault();
 
+            if(String(number.value).includes(",")) {
+                number.value = String(number.value).replace(",", ".")
+            }
+            if(inicialBase.value <= 10) {
+                number.value = Number(number.value)
+            }
+            
             let convertedNumber
-            if(formData[0].value != 10) {
-                convertedNumber = convertToDecimal(formData[2].value, formData[0].value)
-                if(formData[1].value != 10) {
-                    convertedNumber = convertFromDecimal(convertedNumber, formData[1].value)
+            if(inicialBase.value != 10) {
+                convertedNumber = convertToDecimal(number.value, inicialBase.value)
+                if(finalBase.value != 10) {
+                    convertedNumber = convertFromDecimal(convertedNumber, finalBase.value)
                 }
             } else {
-                convertedNumber = convertFromDecimal(formData[2].value, formData[1].value)
+                convertedNumber = convertFromDecimal(number.value, finalBase.value)
             }
 
             let resultado = document.createElement("h2")
-            let texto = document.createTextNode(`Resultado na base ${formData[1].value}: ${convertedNumber}`)
+            let texto = document.createTextNode(`Resultado na base ${finalBase.value}: ${convertedNumber}`)
             resultado.appendChild(texto)
 
-            let element = document.getElementById("form")
+            let element = document.getElementById("divForm")
             let previousResult = document.querySelector("h2")
             if(previousResult) {
                 element.removeChild(previousResult)
