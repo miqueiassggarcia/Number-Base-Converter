@@ -69,37 +69,60 @@
     </div>
 
     <script type="text/javascript">
+        // Pegando dados do forms ao realização do submit
         $( "form" ).submit(function( event ) {
             let [inicialBase, finalBase, number] = $( this ).serializeArray();
             event.preventDefault();
 
+            // Substituindo virgula pelo ponto caso exista
             if(String(number.value).includes(",")) {
-                number.value = String(number.value).replace(",", ".")
+                number.value = Number(String(number.value).replace(",", "."))
             }
+
+            // Convertendo valor para inteiro caso ele seja menor que a base 10
             if(inicialBase.value <= 10) {
                 number.value = Number(number.value)
             }
-            
-            let convertedNumber
-            if(inicialBase.value != 10) {
-                convertedNumber = convertToDecimal(number.value, inicialBase.value)
-                if(finalBase.value != 10) {
-                    convertedNumber = convertFromDecimal(convertedNumber, finalBase.value)
-                }
+
+            // Validando a entrada
+            let validate
+            if(String(number.value).includes(".")) {
+                const [intPart, floatPart] = String(number.value).split(".")
+                validate = validateInputNumbers(intPart)
+                validate = validateInputNumbers(floatPart)
             } else {
-                convertedNumber = convertFromDecimal(number.value, finalBase.value)
+                validate = validateInputNumbers(number.value)
             }
 
-            let resultado = document.createElement("h2")
-            let texto = document.createTextNode(`Resultado na base ${finalBase.value}: ${convertedNumber}`)
-            resultado.appendChild(texto)
+            if(validate) {
+                // Convertendo valores para a base indicada
+                let convertedNumber
+                if(inicialBase.value != 10) {
+                    convertedNumber = convertToDecimal(number.value, inicialBase.value)
+                    if(finalBase.value != 10) {
+                        convertedNumber = convertFromDecimal(convertedNumber, finalBase.value)
+                    }
+                } else {
+                    convertedNumber = convertFromDecimal(number.value, finalBase.value)
+                }
 
-            let element = document.getElementById("divForm")
-            let previousResult = document.querySelector("h2")
-            if(previousResult) {
-                element.removeChild(previousResult)
+                // Criando elemento para mostrar resultado
+                let resultado = document.createElement("h2")
+                let texto = document.createTextNode(`Resultado na base ${finalBase.value}: ${convertedNumber}`)
+                resultado.appendChild(texto)
+
+                // Removendo resultado anterior, caso exista
+                let element = document.getElementById("divForm")
+                let previousResult = document.querySelector("h2")
+                if(previousResult) {
+                    element.removeChild(previousResult)
+                }
+
+                // Adicionando resultado na tela
+                element.appendChild(resultado)
+            } else {
+                alert("Número inserido não pertence a base inicial informada")
             }
-            element.appendChild(resultado)
         });
     </script>
 </body>

@@ -1,3 +1,4 @@
+// JSON de correspondecias hexadecimais
 const correspondences = {
     10: "A",
     11: "B",
@@ -7,7 +8,9 @@ const correspondences = {
     15: "F"
 }
 
+// Função de conversão de números decimais para as demais bases
 function convertFromDecimal(value, finalBase) {
+    // Testar se é inteiro ou float
     if(!Number.isInteger(value)) {
         var integerValue = Math.trunc(value)
 
@@ -19,6 +22,7 @@ function convertFromDecimal(value, finalBase) {
     let restsInts = []
     let restsFloat = []
 
+    // Relizando divisão para a adição dos restos ao vetor
     while (integerValue > 0) {
         if(integerValue % finalBase >= 10 && integerValue % finalBase <= 15) {
             restsInts.push(correspondences[integerValue % finalBase])
@@ -29,6 +33,7 @@ function convertFromDecimal(value, finalBase) {
         integerValue = Math.floor(integerValue / finalBase)
     }
 
+    // Realização das multiplicações caso o número seja float
     if(!Number.isInteger(value)) {
         var intPart
         while (floatValue > 0) {
@@ -49,6 +54,7 @@ function convertFromDecimal(value, finalBase) {
     }
 }
 
+// Função para retornar a correspondencia hexadecimal
 function getKeyByValueOfCorrespondences(value) {
     for(const obj in correspondences) {
         if(correspondences[obj] == value) {
@@ -57,9 +63,11 @@ function getKeyByValueOfCorrespondences(value) {
     }
 }
 
+// Função para realizar potenciação de um vetor
 function powNumbersOfVetor(vetorNumbers, inicialBase, negative = false) {
     var numberToInvertIndex = 1
     var numberToIncrementIndex = 0
+    // Deixar expoente negativo caso o número seja float
     if(negative) {
         numberToInvertIndex = -1
         numberToIncrementIndex = 1
@@ -74,6 +82,7 @@ function powNumbersOfVetor(vetorNumbers, inicialBase, negative = false) {
     , 0)
 }
 
+// Função para converter todas as bases para a base decimal
 function convertToDecimal(value, inicialBase) {
     let result = ""
 
@@ -91,4 +100,18 @@ function convertToDecimal(value, inicialBase) {
     } 
 
     return result
+}
+
+// Função para validar a entrada pelo forms
+function validateInputNumbers(numbers) {
+    return String(numbers).toUpperCase().split("").every(value => {
+        if(value >= "A" && value <= "F") {
+            intValue = getKeyByValueOfCorrespondences(value)
+            return intValue >= 0 && intValue < Number(inicialBase.value)
+        } else if(value >= 0 && value < Number(inicialBase.value)) {
+            return true
+        } else {
+            return false
+        }
+    })
 }
